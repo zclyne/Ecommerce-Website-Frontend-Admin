@@ -1,0 +1,8 @@
+{
+  "name": "mmall-frontend-admin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:zclyne/Ecommerce-Website-Frontend-Admin.git",
+  "author": "Yifan - Macbook Pro <zyfinori@outlook.com>",
+  "license": "MIT"
+}
