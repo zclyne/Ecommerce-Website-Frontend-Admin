@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -6,8 +7,12 @@ module.exports = {
     entry: './src/app.jsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.js'
+        publicPath: '/dist',
+        filename: 'js/app.js'
     },
+    devServer: {
+        port: 8086
+   },
     module: {
         rules: [
             // react语法的处理
@@ -37,12 +42,45 @@ module.exports = {
                     use: ['css-loader', 'sass-loader']
                 })
             },
+            // 图片的配置
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            name: 'resource/[name].[ext]'
+                        },
+                    },
+                ],
+            },
+            // 字体图标的配置
+            {
+                test: /\.(woff|woff2|eot|ttf|otf|svg)(\?.*$|$)/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            limit: 8192,
+                            name: 'resource/[name].[ext]'
+                        }
+                    }
+                ]
+            }
         ]
     },
     plugins: [
+        // 处理html文件
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new ExtractTextPlugin('index.css')
+        // 独立css文件
+        new ExtractTextPlugin('css/[name].css'),
+        // 提出公共模块
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            filename: 'js/base.js'
+        })
     ]
 };
