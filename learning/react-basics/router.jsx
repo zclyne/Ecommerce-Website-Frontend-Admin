@@ -4,7 +4,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-// 路由
+// 页面路由
+// 对应react-router中的<BrowserRouter>
+window.location.href = 'http://www.google.com';
+// 回退
+history.back();
+
+// 哈希路由
+// 对应react-router中的<HashRouter>
+window.location = '#hash';
+window.onhashchange = () => {
+    console.log('current hash: ', window.location.hash);
+};
+
+// h5路由
+// 推进一个状态，会在栈中增加一项
+history.pushState('name', 'title', '/path');
+// 替换一个状态，不会在栈中增加新的一项
+history.replaceState('name', 'title', '/path');
+// 弹出一个状态
+window.onpopstate = () => {
+    // TODO: 学习以下四个location中的变量
+    console.log(window.location.href);
+    console.log(window.location.pathname);
+    console.log(window.location.hash);
+    console.log(window.location.search);
+};
+
+
+
+// react router
 class A extends React.Component {
     constructor(props) {
         super(props);

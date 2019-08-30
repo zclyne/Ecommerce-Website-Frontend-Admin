@@ -1,7 +1,10 @@
 body {
-  //background: #ccc;
-  background: #ccc;
-  #app {
-    font-size: 100px;
-  }
+    //background: #ccc;
+    background: #ccc;
+    #app {
+        .jsx {
+            color: blue;
+            font-size: 60px;
+        }
+    }
 }
