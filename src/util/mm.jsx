@@ -29,6 +29,18 @@ class MUtil {
         // 使用encodeURIComponent是为了防止url中存在特殊字符
         window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
     }
+    getUrlParam(name) { // 获取url参数
+        // xxx.com?param=123&param1=456
+        // window.location.search是包含问号和参数的字符串
+        let queryString = window.location.search.split('?')[1] || '',
+            reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"),
+            result = queryString.match(reg);
+        // result形如：['param=123', '', '123', '&']
+        return result ? decodeURIComponent(result[2]) : null;
+    }
+    errorTips(errMsg) { // 错误提示
+        alert(errMsg || '好像哪里不对了~');
+    }
 }
 
 export default MUtil;

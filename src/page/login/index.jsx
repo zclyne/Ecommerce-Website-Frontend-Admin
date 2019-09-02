@@ -15,8 +15,12 @@ class Login extends React.Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect: _mm.getUrlParam('redirect') || '/'
         };
+    }
+    componentWillMount() {
+        document.title = '登录 - MMALL ADMIN';
     }
     // 当用户名或密码发生改变时，更新state中对应的变量
     onInputChange(e) {
@@ -27,16 +31,30 @@ class Login extends React.Component {
             [inputName]: inputValue
         });
     }
+    onInputKeyUp(e) {
+        if (e.keyCode === 13) { // 如果是回车键，尝试进行登录
+            this.onSubmit();
+        }
+    }
     // 登录按钮的点击事件，提交表单
     onSubmit(e) {
-        _user.login({
+        let loginInfo = {
             username: this.state.username,
             password: this.state.password
-        }).then((res) => { // resolve
-
-        }, (err) => { // reject
-
-        });
+        };
+        // 表单验证
+        let checkResult = _user.checkLoginInfo(loginInfo);
+        if (checkResult.status) { // 验证通过，执行登录
+            // 登录
+            _user.login(loginInfo).then((res) => { // resolve，跳转回先前的页面
+                // this.props.history是由react-router提供的
+                this.props.history.push(this.state.redirect);
+            }, (errMsg) => { // reject
+                _mm.errorTips(errMsg);
+            });
+        } else { // 验证失败
+            _mm.errorTips(checkResult.msg);
+        }
     }
     render() {
         return (
@@ -51,12 +69,14 @@ class Login extends React.Component {
                                 <input type="text" className="form-control"
                                        name="username"
                                        placeholder="用户名"
+                                       onKeyUp={e => this.onInputKeyUp(e)}
                                        onChange={e => this.onInputChange(e)}/>
                             </div>
                             <div className="form-group">
                                 <input type="password" className="form-control"
                                        name="password"
                                        placeholder="密码"
+                                       onKeyUp={e => this.onInputKeyUp(e)}
                                        onChange={e => this.onInputChange(e)}/>
                             </div>
                             <button className="btn btn-primary btn-lg btn-block"
