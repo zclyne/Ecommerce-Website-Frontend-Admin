@@ -47,6 +47,8 @@ class Login extends React.Component {
         if (checkResult.status) { // 验证通过，执行登录
             // 登录
             _user.login(loginInfo).then((res) => { // resolve，跳转回先前的页面
+                // 把登录的用户信息放入本地存储中，从而能够在navb-bar上显示用户名
+                _mm.setStorage('userInfo', res);
                 // this.props.history是由react-router提供的
                 this.props.history.push(this.state.redirect);
             }, (errMsg) => { // reject

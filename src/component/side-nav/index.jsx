@@ -24,7 +24,7 @@ class SideNav extends React.Component {
                         <li className="active">
                             {/*具有二级菜单的link没有active状态，所以不需要用NavLink*/}
                             <Link to="/product">
-                                <i className="fa fa-sitemap"></i>
+                                <i className="fa fa-list"></i>
                                 <span>商品</span>
                                 <span className="fa arrow"></span>
                             </Link>
@@ -40,7 +40,7 @@ class SideNav extends React.Component {
 
                         <li className="active">
                             <Link to="/order">
-                                <i className="fa fa-sitemap"></i>
+                                <i className="fa fa-check-square-o"></i>
                                 <span>订单</span>
                                 <span className="fa arrow"></span>
                             </Link>
@@ -53,7 +53,7 @@ class SideNav extends React.Component {
 
                         <li className="active">
                             <Link to="/user">
-                                <i className="fa fa-sitemap"></i>
+                                <i className="fa fa-user-o"></i>
                                 <span>用户</span>
                                 <span className="fa arrow"></span>
                             </Link>

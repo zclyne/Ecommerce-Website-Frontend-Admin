@@ -24,7 +24,11 @@ module.exports = {
             index: '/dist/index.html'
         },
         proxy: { // 设置dev server代理，防止跨域请求问题
-            '/manage': { // 所有管理系统相关接口都以/manage开头，所以只需要代理/manage
+            '/manage': { // 几乎所有管理系统相关接口都以/manage开头，所以只需要代理/manage
+                target: 'http://admintest.happymmall.com',
+                changeOrigin: true // 必须要有，把请求伪装成由上面这个url发出
+            },
+            '/user/logout.do': { // 用户退出登录的接口不以/manage开头，所以要单独配置
                 target: 'http://admintest.happymmall.com',
                 changeOrigin: true // 必须要有，把请求伪装成由上面这个url发出
             }

@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-ro
 import Home from 'page/home/index.jsx';
 import Layout from 'component/layout/index.jsx';
 import Login from 'page/login/index.jsx';
+import ErrorPage from 'page/error/index.jsx';
 
 class App extends React.Component {
     render() {
@@ -23,6 +24,8 @@ class App extends React.Component {
                                 <Route exact path="/" component={Home}/>
                                 <Route exact path="/product" component={Home}/>
                                 <Route exact path="/product.category" component={Home}/>
+                                {/*若走到下面这条，说明全部都没有匹配到，则进入ErrorPage*/}
+                                <Route component={ErrorPage}/>
                             </Switch>
                         </Layout>
                     )}></Route>
