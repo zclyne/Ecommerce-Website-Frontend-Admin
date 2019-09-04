@@ -34,7 +34,16 @@ class User {
         return _mm.request({
             type: 'post',
             url: '/user/logout.do'
-        })
+        });
+    }
+    getUserList(pageNum) { // 获取用户列表信息
+        return _mm.request({
+            type: 'post',
+            url: '/manage/user/list.do',
+            data: {
+                pageNum: pageNum
+            }
+        });
     }
 }
 

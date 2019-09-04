@@ -8,7 +8,7 @@ class MUtil {
                 url: param.url || '',
                 dataType: param.dataType || 'json',
                 data: param.data || null,
-                success(res) {
+                success: res => {
                     if (0 === res.status) { // 请求成功
                         // 若resolve的类型是function，则执行resolve
                         typeof resolve === 'function' && resolve(res.data, res.msg);
@@ -18,7 +18,7 @@ class MUtil {
                         typeof reject === 'function' && reject(res.msg || res.data);
                     }
                 },
-                error(err) {
+                error: err => {
                     typeof reject === 'function' && reject(err.statusText);
                 }
             });
