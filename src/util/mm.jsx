@@ -41,6 +41,9 @@ class MUtil {
     errorTips(errMsg) { // 错误提示
         alert(errMsg || '好像哪里不对了~');
     }
+    successTips(successMsg) { // 成功提示
+        alert(successMsg || '操作成功！');
+    }
     setStorage(name, data) { // 把data放入本地存储
         let dataType = typeof data;
         if (dataType === 'object') { // 若data是对象，做JSON序列化后保存
