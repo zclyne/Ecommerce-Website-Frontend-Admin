@@ -5,6 +5,9 @@ import PageTitle from "component/page-title/index.jsx";
 import MUtil from 'util/mm.jsx';
 import Product from 'service/product-service.jsx';
 import CategorySelector from './category-selector.jsx';
+import FileUploader from 'util/file-uploader/index.jsx';
+
+import './save.scss';
 
 const _mm = new MUtil();
 const _product = new Product();
@@ -14,7 +17,8 @@ class ProductSave extends React.Component {
         super(props);
         this.state = {
             categoryId: 0,
-            parentCategoryId: 0
+            parentCategoryId: 0,
+            subImages: []
         }
     }
     onCategoryChange(categoryId, parentCategoryId) { // 子组件品类选择器在选择品类后的回调函数
@@ -23,6 +27,25 @@ class ProductSave extends React.Component {
         this.setState({
             categoryId: categoryId,
             parentCategoryId: parentCategoryId
+        });
+    }
+    onUploadSuccess(res) { // 上传图片成功
+        let subImages = this.state.subImages;
+        subImages.push(res);
+        this.setState({
+            subImages: subImages
+        });
+    }
+    onUploadError(errMsg) { // 上传图片失败
+        _mm.errorTips(errMsg);
+    }
+    onImageDelete(e) { // 删除图片
+        // 获取index
+        let index = e.target.index,
+            subImages = this.state.subImages;
+        subImages.splice(index, 1); // 从下标index开始删除一个元素
+        this.setState({
+            subImages: subImages
         });
     }
     render() {
@@ -70,7 +93,20 @@ class ProductSave extends React.Component {
                     <div className="form-group">
                         <label className="col-md-2 control-label">商品图片</label>
                         <div className="col-md-10">
-                            xxx
+                            {
+                                this.state.subImages.length ? this.state.subImages.map(
+                                    (image, index) => (
+                                        <div className="img-con" key={index}>
+                                            <img src={image.url} className="img" />
+                                            <i className="fa fa-close" index={index} onClick={(e) => this.onImageDelete(e)}></i>
+                                        </div>
+                                    ))
+                                    : (<div>请上传图片</div>)
+                            }
+                        </div>
+                        <div className="col-md-10 col-md-offset-2 file-upload-con">
+                            <FileUploader onSuccess={(res) => this.onUploadSuccess(res)}
+                                onError={(errMsg) => this.onUploadError(errMsg)}/>
                         </div>
                     </div>
                     <div className="form-group">
