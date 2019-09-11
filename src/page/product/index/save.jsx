@@ -6,6 +6,7 @@ import MUtil from 'util/mm.jsx';
 import Product from 'service/product-service.jsx';
 import CategorySelector from './category-selector.jsx';
 import FileUploader from 'util/file-uploader/index.jsx';
+import RichEditor from 'util/rich-editor/index.jsx';
 
 import './save.scss';
 
@@ -41,11 +42,17 @@ class ProductSave extends React.Component {
     }
     onImageDelete(e) { // 删除图片
         // 获取index
-        let index = e.target.index,
+        let index = parseInt(e.target.getAttribute('index')),
             subImages = this.state.subImages;
         subImages.splice(index, 1); // 从下标index开始删除一个元素
         this.setState({
             subImages: subImages
+        });
+    }
+    onDetailValueChange(value) { // 商品详情的变化事件
+        console.log(value);
+        this.setState({
+            detail: value
         });
     }
     render() {
@@ -112,7 +119,7 @@ class ProductSave extends React.Component {
                     <div className="form-group">
                         <label className="col-md-2 control-label">商品详情</label>
                         <div className="col-md-10">
-                            detail
+                            <RichEditor onValueChange={(value) => this.onDetailValueChange(value)}/>
                         </div>
                     </div>
                     <div className="form-group">
