@@ -3,6 +3,7 @@
 import React from 'react';
 import Simditor from 'simditor';
 import 'simditor/styles/simditor.scss';
+import './index.scss';
 
 // 通用富文本编辑器，依赖jQuery
 class RichEditor extends React.Component {
@@ -11,6 +12,11 @@ class RichEditor extends React.Component {
     }
     componentDidMount() {
         this.loadEditor();
+    }
+    componentWillReceiveProps(nextProps) { // 回填商品详情
+        if (this.props.defaultDetail !== nextProps.defaultDetail) {
+            this.simditor.setValue(nextProps.defaultDetail);
+        }
     }
     loadEditor() {
         // 在this.refs中通过元素上定义的ref取到元素
