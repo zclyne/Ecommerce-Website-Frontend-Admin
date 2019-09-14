@@ -91,6 +91,9 @@ class Product {
             }
         });
     }
+    updateCategoryName(categoryInfo) {
+
+    }
 }
 
 export default Product;
