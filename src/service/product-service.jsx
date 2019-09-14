@@ -82,8 +82,7 @@ class Product {
 
 
     // 品类相关
-
-    getCategoryList(parentCategoryId) { // 获取子品类列表
+    getCategoryList(parentCategoryId) { // 根据父品类id获取子品类列表
         return _mm.request({
             url: '/manage/category/get_category.do',
             data: {
@@ -91,8 +90,17 @@ class Product {
             }
         });
     }
-    updateCategoryName(categoryInfo) {
-
+    saveCategory(categoryInfo) { // 新增品类
+        return _mm.request({
+            url: '/manage/category/add_category.do',
+            data: categoryInfo
+        });
+    }
+    updateCategoryName(categoryInfo) { // 更新品类名称
+        return _mm.request({
+            url: '/manage/category/set_category_name.do',
+            data: categoryInfo
+        });
     }
 }
 
